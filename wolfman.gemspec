@@ -27,6 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "faraday", "0.12.1"
   spec.add_dependency "launchy", "2.4.3"
   spec.add_dependency "netrc", "0.11.0"
+  spec.add_dependency "recursive-open-struct"
   spec.add_dependency "rundeck", "1.2.1"
 
   spec.add_development_dependency "bundler", "~> 1.14"
