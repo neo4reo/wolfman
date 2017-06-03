@@ -1,8 +1,4 @@
 open:
   aws: https://wealthsimple.signin.aws.amazon.com/console
   rundeck: https://rundeck.iad.w10e.com
-  www: https://www.wealthsimple.com
-  www-staging: https://www-staging.wealthsimple.com
-  wealthsimple: https://my.wealthsimple.com
-  wealthsimple-staging: https://staging.wealthsimple.com
-  review: https://review.wealthsimple.com
+  default: https://%{identifier}.wealthsimple.com
