@@ -57,5 +57,32 @@ module Wolfman
         faraday.use Faraday::Response::RaiseError
       end
     end
+
+    def self.find_executions!(project, job_query)
+      executions = get!("/project/#{project.name}/executions?jobFilter=#{job_query}")
+      executions = executions.executions
+      if !executions.present?
+        raise RundeckError.new("No executions found for #{job_query} in #{project.name}.")
+      end
+      executions
+    end
+
+    def self.find_project!(query)
+      normalized_query = normalize_name(query)
+      projects = get!("/projects").select do |project|
+        normalize_name(project.name).include?(normalized_query)
+      end
+      if projects.size != 1
+        error = ["Unrecognized project #{query}."]
+        error << "Specify project that matches one of the following:"
+        error << projects.map { |project| "- #{Paint[project.name, :magenta]}" }.join("\n")
+        raise RundeckError.new(error.join("\n"))
+      end
+      projects.first
+    end
+
+    def self.normalize_name(name)
+      name.downcase.gsub(/[^a-z0-9]+/, "")
+    end
   end
 end
