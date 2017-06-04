@@ -7,7 +7,7 @@ module Wolfman
 Examples:
 
     $ #{Paint["wolfman jobs -s poseidon -e staging", :magenta]}
-    # lists recent job executions for Poseidon (staging)
+    # lists recent job executions for Poseidon (staging environment)
 DESCRIPTION
 
     option :s, :service, "service name", argument: :required

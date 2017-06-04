@@ -29,7 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "faraday-cookie_jar", "0.0.6"
   spec.add_dependency "highline", "1.7.8"
   spec.add_dependency "launchy", "2.4.3"
-  spec.add_dependency "netrc", "0.11.0"
   spec.add_dependency "paint", "2.0.0"
   spec.add_dependency "recursive-open-struct"
 
