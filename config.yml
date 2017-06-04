@@ -1,4 +1,0 @@
-open:
-  aws: https://wealthsimple.signin.aws.amazon.com/console
-  rundeck: https://rundeck.iad.w10e.com
-  default: https://%{identifier}.wealthsimple.com

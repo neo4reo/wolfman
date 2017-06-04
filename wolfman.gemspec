@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "aws-sdk", "2.9.28"
   spec.add_dependency "cri", "2.9.1"
   spec.add_dependency "faraday", "0.12.1"
+  spec.add_dependency "highline", "1.7.8"
   spec.add_dependency "launchy", "2.4.3"
   spec.add_dependency "netrc", "0.11.0"
   spec.add_dependency "paint", "2.0.0"

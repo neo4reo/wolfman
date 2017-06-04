@@ -1,13 +1,22 @@
 module Wolfman
-  CLI = Cri::Command.new_basic_root.modify do
+  CLI = Cri::Command.define do
     name "wolfman"
-    usage "wolfman COMMAND [--app APP] [command-specific-options]"
+    description <<-DESCRIPTION
+Run a command:
+    #{Paint["wolfman COMMAND [command-specific-options]", :magenta]}
+
+Get help for a specific command:
+    #{Paint["wolfman help COMMAND", :magenta]}
+    DESCRIPTION
     summary "CLI for Rundeck and the AWS VPC infrastructure"
 
     run do |opts, args, cmd|
       if !opts.present? && !args.present?
         puts cmd.help
+        exit 0
       end
     end
   end
+
+  CLI.add_command Cri::Command.new_basic_help
 end
