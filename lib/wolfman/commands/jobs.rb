@@ -21,7 +21,7 @@ DESCRIPTION
       end
 
       begin
-        Rundeck.request!(:get, "/TODO")
+        p Rundeck.get!("/api/18/projects")
       rescue Rundeck::RundeckError => e
         puts e.message
         exit 1

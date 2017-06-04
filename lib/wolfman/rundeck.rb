@@ -9,8 +9,18 @@ module Wolfman
       end
     end
 
-    def self.request!(http_method, path)
+    def self.get!(path)
       start_session!
+      response = connection.get do |request|
+        request.url path
+        request.headers["Accept"] = "application/json"
+      end
+      response_json = JSON.parse(response.body)
+      if response_json.is_a?(Array)
+        response_json.map { |r| Resource.new(r) }
+      else
+        Resource.new(response_json)
+      end
     end
 
     def self.start_session!(host: nil, username: nil, password: nil)
@@ -23,7 +33,7 @@ module Wolfman
         j_password: password,
       })
 
-      if session.headers["location"].include?("error")
+      if session.headers["location"].include?("user/error")
         raise RundeckError.new("Error: invalid Rundeck username or password.")
       else
         @authenticated = true

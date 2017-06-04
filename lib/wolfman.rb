@@ -8,12 +8,14 @@ require "json"
 require "launchy"
 require "netrc"
 require "paint"
+require "pp"
 require "recursive-open-struct"
 require "yaml"
 
 require "wolfman/version"
 require "wolfman/cli"
 require "wolfman/config"
+require "wolfman/resource"
 require "wolfman/rundeck"
 Dir[File.dirname(__FILE__) + '/wolfman/commands/*.rb'].each {|file| require file }
 
