@@ -1,11 +1,13 @@
 module Wolfman
   class Config
     PATH = "#{Dir.home}/.wolfmanrc"
+    # Prevent other users from reading/writing to this file.
+    PERMISSIONS = 0600
 
     def self.config!
       if !File.file?(PATH)
-        puts "CReating #{PATH}"
         File.open(PATH, "w") { |f| f.write({}.to_yaml) }
+        File.chmod(PERMISSIONS, PATH)
       end
       YAML.load_file(PATH)
     end

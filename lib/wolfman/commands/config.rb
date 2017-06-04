@@ -1,12 +1,12 @@
 module Wolfman
   CLI.define_command do
     name "config"
-    summary "configure AWS and Rundeck connection settings"
+    summary "configure connection settings for AWS, Rundeck, and more"
     usage "config [SERVICE]"
     description <<-DESCRIPTION
-Configures your AWS and Rundeck login credentials, and the endpoints used for
-accessing these services. Running this command will create or update your
-~/.wolfmanrc to store these credentials for future use.
+Configures your AWS and Rundeck login credentials, and the endpoints used for accessing these services.
+
+Running this command will create or update your #{Paint["~/.wolfmanrc", :blue]} to store these credentials for future use. When storing this file on disk, it's permissions are set to #{Paint["0600", :blue]} so that only your user has read/write access.
 
 Examples:
 
