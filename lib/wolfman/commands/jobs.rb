@@ -33,6 +33,7 @@ DESCRIPTION
       end
 
       puts "=== #{Paint[project.name, :blue, :bold]} #{Paint[executions.first.job.name, :magenta, :bold]}"
+      
       executions.first(10).each do |execution|
         status_mark = case execution.status
         when "succeeded" then Paint["✓", :green]

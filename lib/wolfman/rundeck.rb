@@ -4,9 +4,10 @@ module Wolfman
     end
 
     API_VERSION = 18
+    REQUIRED_CONFIG = %w[host username password]
 
     def self.configured?
-      %w[host username password].all? do |key|
+      REQUIRED_CONFIG.all? do |key|
         Config.exists?(:rundeck, key)
       end
     end
