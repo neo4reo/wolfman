@@ -1,6 +1,7 @@
 require "active_support"
 require "active_support/core_ext"
 require "cri"
+require "date"
 require "faraday"
 require "faraday-cookie_jar"
 require "highline/import"

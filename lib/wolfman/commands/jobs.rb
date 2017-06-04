@@ -27,7 +27,7 @@ DESCRIPTION
       begin
         projects = Rundeck.get!("/projects")
         project = projects.find do |project|
-          project.name.downcase.include?(opts[:env])
+          project.name.downcase.include?(opts[:env].downcase)
         end
         if !project.present?
           puts "Unrecognized environment #{opts[:env]}."
@@ -56,10 +56,13 @@ DESCRIPTION
             version = ""
           end
 
+          # Format in terms of local time, not UTC.
+          daetime_local = DateTime.parse(execution.send("date-started").date).to_time
+
           puts "%{status_mark} %{status} %{version} at %{datetime} by %{user}" % {
             status_mark: status_mark,
             status: Paint[execution.status, :white],
-            datetime: execution.send("date-started").date,
+            datetime: daetime_local,
             user: Paint[execution.user, :magenta],
             version: version,
           }
