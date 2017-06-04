@@ -45,16 +45,24 @@ Examples:
       end
 
       if service == "open"
-        config[:domain] = ask("Primary domain: (ex: #{Paint["my-service.com", :red]})")
-        config[:protocol] = ask("http or https? ") { |q| q.validate = /\Ahttps?\z/ }
+        config[:domain] = ask("Domain (ex: #{Paint["service.com", :red]}): ")
+        config[:protocol] = ask("#{Paint["http", :red]} or #{Paint["https", :red]}? ") { |q| q.validate = /\Ahttps?\z/ }
       end
 
       if service == "rundeck"
-        config[:host] = ask("Rundeck host (ex: #{Paint["https://rundeck.example.com", :red]}): ")
+        config[:host] = ask("Rundeck host (ex: #{Paint["https://rundeck.example.com", :red]}): ") { |q| q.validate = /\Ahttps?/ }
         config[:username] = ask("Rundeck username: ")
         config[:password] = ask("Rundeck password: ") { |q| q.echo = "*" }
 
-        # TODO: verify Rundeck connection
+        puts "\nVerifying connection settings..."
+        begin
+          Rundeck.start_session!(config)
+        rescue Rundeck::RundeckError => e
+          puts e.message
+          puts "Exiting without saving configuration."
+          exit 1
+        end
+        puts "Connected!"
       end
 
       Config.save!(service, config)

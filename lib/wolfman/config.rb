@@ -20,6 +20,10 @@ module Wolfman
       get(*keys) or raise KeyError.new("Config not found: #{keys.join(' => ')}")
     end
 
+    def self.exists?(*keys)
+      get(*keys).present?
+    end
+
     def self.save!(key, value)
       new_config = config!
       new_config[key] = value
