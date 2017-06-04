@@ -1,16 +1,8 @@
 module Wolfman
-  module Commands
-    class Open
-      def name
-        "open"
-      end
-
-      def description
-        "open a service in a web browser"
-      end
-
-      def help
-        <<-HELP
+  CLI.define_command do
+    name "open"
+    summary "open a service in your web browser"
+    description <<-HELP
 Examples:
 
     $ wolfman open www
@@ -21,19 +13,19 @@ Examples:
 
     $ wolfman open rundeck
     # opens https://rundeck.iad.w10e.com
-        HELP
-      end
+HELP
 
-      def run(identifier, path = "")
-        url = Config.get(:open, identifier)
-        url ||= Config.get(:open, :default) % {identifier: identifier}
-        if path.present?
-          url += "/" if !url.ends_with?("/")
-          path = path.sub(%r{^/}, "")
-          url += path
-        end
-        Launchy.open(url)
+    run do |opts, args|
+      identifier, path = args
+      url = Config.get(:open, identifier)
+      url ||= Config.get(:open, :default) % {identifier: identifier}
+      if path.present?
+        url += "/" if !url.ends_with?("/")
+        path = path.sub(%r{^/}, "")
+        url += path
       end
+      puts "Launching #{Paint[url, :blue]}"
+      Launchy.open(url)
     end
   end
 end

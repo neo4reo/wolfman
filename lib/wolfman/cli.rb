@@ -1,16 +1,13 @@
 module Wolfman
-  class Cli
-    def initialize
-      @commands = Commands.constants.select { |c| Commands.const_get(c).is_a? Class }
-    end
+  CLI = Cri::Command.new_basic_root.modify do
+    name "wolfman"
+    usage "wolfman COMMAND [--app APP] [command-specific-options]"
+    summary "CLI for Rundeck and the AWS VPC infrastructure"
 
-    def help
-      <<-HELP
-Usage: wolfman COMMAND [--app APP] [command-specific-options]
-
-For help on a specific command, type wolfman help COMMAND:
-
-      HELP
+    run do |opts, args, cmd|
+      if !opts.present? && !args.present?
+        puts cmd.help
+      end
     end
   end
 end
