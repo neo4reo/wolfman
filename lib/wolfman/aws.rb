@@ -28,14 +28,7 @@ module Wolfman
       if filtered_instances.empty?
         raise AWSError.new("Unable to find instances with a tag matching #{Paint[service, :magenta]}.")
       end
-      # Prefer worker instances if available
-      filtered_instances.sort_by do |instance|
-        if normalize_name(instance_name(instance)).include?("worker")
-          0
-        else
-          1
-        end
-      end
+      filtered_instances
     end
 
     def self.instance_name(instance)

@@ -28,14 +28,23 @@ Examples:
         env = AWS.find_environment!(opts[:env])
         puts "Searching environment #{Paint[env, :magenta, :bold]} for instances..."
         instances = AWS.find_instances!(env, opts[:service])
-        puts "Found #{Paint[instances.size, :green]} instance(s) corresponding to #{Paint[opts[:service], :green]}"
       rescue AWS::AWSError => e
         puts e.message
         exit 1
       end
 
-      instance = instances.first
-      instance_name = AWS.instance_name(instance)
+      unique_instance_names = instances.map { |instance| AWS.instance_name(instance) }.uniq
+      instance_name = nil
+      instance = nil
+
+      choose do |menu|
+        menu.prompt = "Choose an EC2 instance: "
+        menu.choices(*unique_instance_names) do |choice, _details|
+          instance_name = choice
+          instance = instances.find { |instance| AWS.instance_name(instance) == instance_name }
+        end
+      end
+
       puts "Establishing SSH connection to #{Paint[instance_name, :blue, :bold]} at #{Paint[instance.private_ip_address, :green]}..."
     end
   end
