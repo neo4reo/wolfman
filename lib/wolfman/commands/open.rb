@@ -6,7 +6,7 @@ module Wolfman
       end
 
       def description
-        "open a service in your browser"
+        "open a service in a web browser"
       end
 
       def help

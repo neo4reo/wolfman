@@ -9,7 +9,10 @@ require "rundeck"
 
 require "wolfman/version"
 require "wolfman/config"
-require "wolfman/commands/open"
+Dir[File.dirname(__FILE__) + '/wolfman/commands/*.rb'].each {|file| require file }
+
+# Always require this last, after all commands have been loaded:
+require "wolfman/cli"
 
 module Wolfman
 end
