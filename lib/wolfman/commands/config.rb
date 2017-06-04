@@ -2,7 +2,7 @@ module Wolfman
   CLI.define_command do
     name "config"
     summary "configure connection settings for AWS, Rundeck, and more"
-    usage "config [SERVICE]"
+    usage "config SERVICE"
     description <<-DESCRIPTION
 Configures your AWS and Rundeck login credentials, and the endpoints used for accessing these services.
 

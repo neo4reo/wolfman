@@ -3,6 +3,8 @@ module Wolfman
     class RundeckError < StandardError
     end
 
+    API_VERSION = 18
+
     def self.configured?
       %w[host username password].all? do |key|
         Config.exists?(:rundeck, key)
@@ -12,7 +14,8 @@ module Wolfman
     def self.get!(path)
       start_session!
       response = connection.get do |request|
-        request.url path
+        path = "/#{path}" unless path.start_with?("/")
+        request.url "/api/#{API_VERSION}#{path}"
         request.headers["Accept"] = "application/json"
       end
       response_json = JSON.parse(response.body)
