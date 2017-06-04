@@ -51,6 +51,7 @@ module Wolfman
       @connections ||= {}
       host ||= Config.get(:rundeck, :host)
       @connections[host] ||= Faraday.new(url: host) do |faraday|
+        puts "Establishing connection to #{Paint[host, :green]}...\n\n"
         faraday.use :cookie_jar
         faraday.request :url_encoded
         faraday.adapter Faraday.default_adapter
