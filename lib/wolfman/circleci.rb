@@ -12,26 +12,26 @@ module Wolfman
     end
 
     def self.recent_builds!(reponame, branch)
-      configure!
       project = CircleCi::Project.new(Config.get!(:circleci, :username), reponame)
-      response = project.recent_builds_branch(branch)
-      if !response.success?
-        if response.code == "404"
-          raise CircleCIError.new("Error: CircleCI project #{Paint[reponame, :magenta]} not found.")
-        else
-          raise CircleCIError.new("Unable to connect. Check that your CircleCI API token is still valid.")
-        end
+      response = with_auth { project.recent_builds_branch(branch) }
+      if response.code == "404"
+        raise CircleCIError.new("Error: CircleCI project #{Paint[reponame, :magenta]} not found.")
       end
       response.body.map { |build| Resource.new(build) }
     end
 
-    def self.check_authentication!
+    def self.check_auth!
+      with_auth { CircleCi::User.new.me }
+      true
+    end
+
+    def self.with_auth(&block)
       configure!
-      response = CircleCi::User.new.me
-      if !response.success?
+      response = yield
+      if response.code == "401"
         raise CircleCIError.new("Unable to connect. Check that your CircleCI API token is still valid.")
       end
-      true
+      response
     end
 
     def self.configure!(token: nil)

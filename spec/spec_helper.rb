@@ -20,3 +20,39 @@ RSpec.configure do |config|
     Wolfman::Config.config(config_path, reset: true)
   end
 end
+
+def set_valid_config!
+  set_valid_aws_config!
+  set_valid_circleci_config!
+  set_valid_rundeck_config!
+end
+
+def set_valid_aws_config!
+  Wolfman::Config.save!(:aws, {
+    access_key_id: "AKIA123",
+    secret_access_key: "secret12345",
+    account_id: "mycompany",
+    region: "us-east-1",
+  })
+end
+
+def set_valid_circleci_config!
+  Wolfman::Config.save!(:circleci, {
+    api_token: "some-token",
+    username: "my-github-org",
+  })
+end
+
+def set_valid_rundeck_config!
+  Wolfman::Config.save!(:rundeck, {
+    host: "https://rundeck.example.com",
+    username: "myuser",
+    password: "mypassword",
+  })
+end
+
+def stub_circleci_response(object, method, body: nil, status: 200)
+  stub = allow_any_instance_of(object).to receive(method)
+  success = status.to_i < 400
+  stub.and_return(double(code: status.to_s, success?: success, body: body))
+end

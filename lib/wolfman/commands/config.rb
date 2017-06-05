@@ -56,7 +56,7 @@ Options:
         puts "\nVerifying connection settings..."
         begin
           CircleCI.configure!(token: config[:api_token])
-          CircleCI.check_authentication!
+          CircleCI.check_auth!
         rescue CircleCI::CircleCIError => e
           puts e.message
           puts "Exiting without saving configuration."
