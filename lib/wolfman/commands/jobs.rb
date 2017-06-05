@@ -43,18 +43,18 @@ DESCRIPTION
 
         app_version = execution.job.options.APP_VERSION
         if app_version
-          version = Paint["v#{app_version}", :cyan]
+          version = "v" + Paint["#{app_version}", :cyan]
         else
           version = ""
         end
 
         # Format in terms of local time, not UTC.
-        daetime_local = DateTime.parse(execution.send("date-started").date).to_time
+        dateime_local = DateTime.parse(execution.send("date-started").date).to_time
 
         puts "%{status_mark} %{status} %{version} at %{datetime} by %{user}" % {
           status_mark: status_mark,
           status: Paint[execution.status, :white],
-          datetime: daetime_local,
+          datetime: dateime_local,
           user: Paint[execution.user, :magenta],
           version: version,
         }

@@ -50,14 +50,14 @@ DESCRIPTION
         end
 
         # Format in terms of local time, not UTC.
-        daetime_local = DateTime.parse(build.usage_queued_at).to_time
+        datetime_local = DateTime.parse(build.usage_queued_at).to_time
 
         puts "%{status_mark} %{status} v%{version} at %{datetime} by %{user}" % {
           status_mark: status_mark,
           status: Paint[build.status, :white],
-          datetime: daetime_local,
+          datetime: datetime_local,
           user: Paint[build.user&.login || build.author_name, :magenta],
-          version: Paint[build.build_num, :yellow],
+          version: Paint[build.build_num, :cyan],
         }
       end
     end
