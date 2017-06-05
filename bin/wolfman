@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 
-require "bundler/setup"
-require "wolfman"
+# Need to add lib to load path, so that wolfman can be executed from other
+# directories with other ruby versions.
+require 'pathname'
+lib_directory = File.join(Pathname.new(__FILE__).dirname.parent, 'lib')
+$LOAD_PATH.unshift(lib_directory)
 
+require "wolfman"
 Wolfman::CLI.run(ARGV)
