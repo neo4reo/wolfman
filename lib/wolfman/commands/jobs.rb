@@ -6,8 +6,8 @@ module Wolfman
     description <<-DESCRIPTION
 Examples:
 
-    $ #{Paint["wolfman jobs -s poseidon -e staging", :magenta]}
-    # lists recent job executions for poseidon staging
+    $ #{Paint["wolfman jobs -s my-service -e staging", :magenta]}
+    # lists recent job executions for my-service staging
 DESCRIPTION
 
     option :s, :service, "service name (my-service)", argument: :required
@@ -33,7 +33,7 @@ DESCRIPTION
       end
 
       puts "=== #{Paint[project.name, :blue, :bold]} #{Paint[executions.first.job.name, :magenta, :bold]}"
-      
+
       executions.first(10).each do |execution|
         status_mark = case execution.status
         when "succeeded" then Paint["✓", :green]

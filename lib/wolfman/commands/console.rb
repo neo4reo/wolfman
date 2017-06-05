@@ -6,8 +6,8 @@ module Wolfman
     description <<-DESCRIPTION
 Examples:
 
-    $ #{Paint["wolfman console -s poseidon -e staging", :magenta]}
-    # opens an SSH console into poseidon staging
+    $ #{Paint["wolfman console -s my-service -e staging", :magenta]}
+    # opens an SSH console into my-service staging
     DESCRIPTION
 
     option :s, :service, "service name (my-service)", argument: :required
@@ -34,14 +34,18 @@ Examples:
       end
 
       unique_instance_names = instances.map { |instance| AWS.instance_name(instance) }.uniq
-      instance_name = nil
-      instance = nil
-
-      choose do |menu|
-        menu.prompt = "Choose an EC2 instance: "
-        menu.choices(*unique_instance_names) do |choice, _details|
-          instance_name = choice
-          instance = instances.find { |instance| AWS.instance_name(instance) == instance_name }
+      if unique_instance_names.size == 1
+        instance_name = unique_instance_names.first
+        instance = instances.first
+      else
+        instance_name = nil
+        instance = nil
+        choose do |menu|
+          menu.prompt = "Choose an EC2 instance: "
+          menu.choices(*unique_instance_names) do |choice, _details|
+            instance_name = choice
+            instance = instances.find { |instance| AWS.instance_name(instance) == instance_name }
+          end
         end
       end
 
