@@ -13,4 +13,10 @@ RSpec.configure do |config|
   end
   config.filter_run :focus
   config.run_all_when_everything_filtered = true
+
+  config.before do
+    # Override config path for specs, reset config between tests.
+    config_path = File.join(File.expand_path(File.dirname(__FILE__)), ".wolfmanrc")
+    Wolfman::Config.config(config_path, reset: true)
+  end
 end
