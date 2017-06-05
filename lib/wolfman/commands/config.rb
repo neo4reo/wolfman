@@ -16,6 +16,9 @@ Options:
     $ #{Paint["wolfman config circleci", :magenta]}
     # Configure CircleCI connection settings
 
+    $ #{Paint["wolfman config jumpbox", :magenta]}
+    # Configure SSH jumpbox connection settings
+
     $ #{Paint["wolfman config open", :magenta]}
     # Configure #{Paint["wolfman open", :blue]} settings
 
@@ -25,7 +28,7 @@ Options:
 
     run do |_opts, args, cmd|
       setting = args[0]
-      if !setting.present? || !%w[aws circleci open rundeck].include?(setting)
+      if !setting.present? || !%w[aws circleci jumpbox open rundeck].include?(setting)
         puts cmd.help
         exit 0
       end
@@ -43,7 +46,6 @@ Options:
         config[:access_key_id] = ask("AWS access key ID (ex: #{Paint["AKIA...", :red]}): ")
         config[:secret_access_key] = ask("AWS secret access key: ")
         config[:region] = ask("AWS region (ex: #{Paint["us-east-1", :red]}): ")
-        config[:jumpbox_host] = ask("Jumpbox host (optional): ")
 
         # TODO: verify AWS connection
       end
@@ -60,6 +62,18 @@ Options:
         rescue CircleCI::CircleCIError => e
           puts e.message
           puts "Exiting without saving configuration."
+          exit 1
+        end
+        puts "Connected!"
+      end
+
+      if setting == "jumpbox"
+        config[:host] = ask("Jumpbox host: ")
+        config[:port] = ask("Jumpbox port (defaults to 22): ").presence
+
+        puts "\nVerifying connection settings..."
+        if !Jumpbox.connected?(config)
+          puts "Unable to open a TCP socket. Exiting without saving configuration."
           exit 1
         end
         puts "Connected!"
