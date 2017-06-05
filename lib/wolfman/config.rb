@@ -41,7 +41,7 @@ module Wolfman
         @config = nil
         File.delete(path) if File.file?(path)
       end
-      @config ||= Config.new(path)
+      @config ||= new(path)
     end
   end
 end
