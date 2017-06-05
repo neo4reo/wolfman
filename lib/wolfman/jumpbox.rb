@@ -8,6 +8,13 @@ module Wolfman
     end
 
     def self.connected?(host: nil, port: nil)
+      check_connection!(host: host, port: port)
+      true
+    rescue JumpboxError
+      false
+    end
+
+    def self.check_connection!(host: nil, port: nil)
       host ||= config_host
       port ||= config_port
       Timeout::timeout(1) do
@@ -16,11 +23,7 @@ module Wolfman
       end
       true
     rescue SocketError, Timeout::Error
-      false
-    end
-
-    def self.check_connection!(host: nil, port: nil)
-      connected?(host: host, port: port) or raise JumpboxError.new("Unable to connect to jumpbox.")
+      raise JumpboxError.new("Unable to connect to jumpbox #{Paint[host, :green]}:#{Paint[port, :green]}.")
     end
 
     def self.config_host
