@@ -21,14 +21,14 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 2.3.0"
 
-  spec.add_dependency "activesupport", ">= 4"
-  spec.add_dependency "aws-sdk", ">= 2"
+  spec.add_dependency "activesupport", "5.1.1"
+  spec.add_dependency "aws-sdk", "2.9.28"
   spec.add_dependency "cri", "2.9.1"
-  spec.add_dependency "faraday", ">= 0.10"
+  spec.add_dependency "faraday", "0.12.1"
   spec.add_dependency "faraday-cookie_jar", "0.0.6"
-  spec.add_dependency "highline", ">= 1.7"
-  spec.add_dependency "launchy", ">= 2"
-  spec.add_dependency "paint", ">= 2"
+  spec.add_dependency "highline", "1.7.8"
+  spec.add_dependency "launchy", "2.4.3"
+  spec.add_dependency "paint", "2.0.0"
   spec.add_dependency "recursive-open-struct"
 
   spec.add_development_dependency "bundler", "~> 1.14"
