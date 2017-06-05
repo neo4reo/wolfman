@@ -42,8 +42,8 @@ Examples:
         instance = nil
         choose do |menu|
           menu.prompt = "Choose an EC2 instance: "
-          menu.choices(*unique_instance_names) do |choice, _details|
-            instance_name = choice
+          menu.choices(*unique_instance_names.map { |name| Paint[name, :blue] }) do |choice, _details|
+            instance_name = Paint.unpaint(choice)
             instance = instances.find { |instance| AWS.instance_name(instance) == instance_name }
           end
         end
