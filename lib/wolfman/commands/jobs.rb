@@ -37,7 +37,7 @@ DESCRIPTION
       executions.first(10).each do |execution|
         status_mark = case execution.status
         when "succeeded" then Paint["✓", :green]
-        when "running" then Paint["●", :yellow]
+        when "running" then Paint["●", "gold"]
         else Paint["✗", :red] # failed, aborted, etc
         end
 
