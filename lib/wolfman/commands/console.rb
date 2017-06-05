@@ -46,6 +46,9 @@ Examples:
       end
 
       puts "Establishing SSH connection to #{Paint[instance_name, :blue, :bold]} at #{Paint[instance.private_ip_address, :green]}..."
+
+      # TODO: make this more generic.
+      exec(%{ssh -t #{instance.private_ip_address}.ws})
     end
   end
 end
