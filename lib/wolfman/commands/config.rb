@@ -4,7 +4,7 @@ module Wolfman
     summary "configure connection settings for AWS, Rundeck, and more"
     usage "config SETTING"
     description <<-DESCRIPTION
-Configures your AWS and Rundeck login credentials, and the endpoints used for accessing these services.
+Configures your AWS, CircleCI, and Rundeck login credentials, and the endpoints used for accessing these services.
 
 Running this command will create or update your #{Paint["~/.wolfmanrc", :blue]} to store these credentials for future use. When storing this file on disk, it's permissions are set to #{Paint["0600", :blue]} so that only your user has read/write access.
 
@@ -12,6 +12,9 @@ Options:
 
     $ #{Paint["wolfman config aws", :magenta]}
     # Configure AWS connection settings
+
+    $ #{Paint["wolfman config circleci", :magenta]}
+    # Configure CircleCI connection settings
 
     $ #{Paint["wolfman config open", :magenta]}
     # Configure #{Paint["wolfman open", :blue]} settings
@@ -22,7 +25,7 @@ Options:
 
     run do |_opts, args, cmd|
       setting = args[0]
-      if !setting.present? || !%w[aws open rundeck].include?(setting)
+      if !setting.present? || !%w[aws circleci open rundeck].include?(setting)
         puts cmd.help
         exit 0
       end
@@ -42,6 +45,23 @@ Options:
         config[:region] = ask("AWS region (ex: #{Paint["us-east-1", :red]}): ")
 
         # TODO: verify AWS connection
+      end
+
+      if setting == "circleci"
+        puts "Generate an API token at #{Paint["https://circleci.com/account/api", :blue]}"
+        config[:api_token] = ask("CircleCI API token: ")
+        config[:username] = ask("Github Org name: ")
+
+        puts "\nVerifying connection settings..."
+        begin
+          CircleCI.configure!(token: config[:api_token])
+          CircleCI.followed_projects!
+        rescue CircleCI::CircleCIError => e
+          puts e.message
+          puts "Exiting without saving configuration."
+          exit 1
+        end
+        puts "Connected!"
       end
 
       if setting == "open"

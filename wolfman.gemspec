@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activesupport", "5.1.1"
   spec.add_dependency "aws-sdk", "2.9.28"
+  spec.add_dependency "circleci", "2.0.0"
   spec.add_dependency "cri", "2.9.1"
   spec.add_dependency "faraday", "0.12.1"
   spec.add_dependency "faraday-cookie_jar", "0.0.6"
