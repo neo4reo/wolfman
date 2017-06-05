@@ -1,10 +1,23 @@
 # wolfman
 
-Command line interface for the AWS VPC infrastructure.
+CLI for Rundeck and AWS VPC infrastructure.
 
 ## Installation
 
-TODO: Write instructions here
+Clone the git repository and install gems:
+
+```
+git clone git@github.com:wealthsimple/wolfman.git
+cd wolfman
+bundle install
+```
+
+Finally, add an alias so that you can easily execute it:
+
+```
+# Insert into ~/.bashrc or equivalent
+alias wolfman="/path/to/wolfman-repo/bin/wolfman"
+```
 
 ## Usage
 
