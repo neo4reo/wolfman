@@ -25,13 +25,13 @@ module Wolfman
       response.body.map { |build| Resource.new(build) }
     end
 
-    def self.followed_projects!
+    def self.check_authentication!
       configure!
-      response = CircleCi::Projects.new.get
+      response = CircleCi::User.new.me
       if !response.success?
         raise CircleCIError.new("Unable to connect. Check that your CircleCI API token is still valid.")
       end
-      response.body
+      true
     end
 
     def self.configure!(token: nil)
