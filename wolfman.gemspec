@@ -6,8 +6,8 @@ require 'wolfman/version'
 Gem::Specification.new do |spec|
   spec.name          = "wolfman"
   spec.version       = Wolfman::VERSION
-  spec.authors       = ["Peter Graham"]
-  spec.email         = ["peter@wealthsimple.com"]
+  spec.authors       = ["Marco Costa", "Peter Graham"]
+  spec.email         = ["marco@wealthsimple.com", "peter@wealthsimple.com"]
 
   spec.summary       = %q{CLI tool for VPC}
   spec.description   = %q{Command line interface for the AWS VPC infrastructure.}
