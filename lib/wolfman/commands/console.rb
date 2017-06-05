@@ -2,19 +2,19 @@ module Wolfman
   CLI.define_command do
     name "console"
     summary "open a console on an EC2 machine"
-    usage "console -s SERVICE -e ENV"
+    usage "console -a APP -e ENV"
     description <<-DESCRIPTION
 Examples:
 
-    $ #{Paint["wolfman console -s my-service -e staging", :magenta]}
-    # opens an SSH console into my-service staging
+    $ #{Paint["wolfman console -a myapp -e staging", :magenta]}
+    # opens an SSH console into myapp staging
     DESCRIPTION
 
-    option :s, :service, "service name (my-service)", argument: :required
+    option :a, :app, "app name (myapp)", argument: :required
     option :e, :env, "environment (production, staging, ...)", argument: :required
 
     run do |opts, args, cmd|
-      if !opts[:env].present? || !opts[:service].present?
+      if !opts[:env].present? || !opts[:app].present?
         puts cmd.help
         exit 1
       end
@@ -27,7 +27,7 @@ Examples:
       begin
         env = AWS.find_environment!(opts[:env])
         puts "Searching environment #{Paint[env, :magenta, :bold]} for instances..."
-        instances = AWS.find_instances!(env, opts[:service])
+        instances = AWS.find_instances!(env, opts[:app])
       rescue AWS::AWSError => e
         puts e.message
         exit 1

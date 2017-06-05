@@ -1,7 +1,7 @@
 module Wolfman
   CLI.define_command do
     name "open"
-    summary "open a service in your web browser"
+    summary "open an app/service in your web browser"
     usage "open SERVICE [PATH]"
     description <<-DESCRIPTION
 Examples:
@@ -14,7 +14,7 @@ Examples:
 
     $ #{Paint["wolfman open rundeck", :magenta]}
     # opens #{Paint["https://rundeck.host.com", :blue]}
-DESCRIPTION
+    DESCRIPTION
 
     run do |_opts, args, cmd|
       if !args.present?

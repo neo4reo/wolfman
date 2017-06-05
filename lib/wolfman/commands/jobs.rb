@@ -2,19 +2,19 @@ module Wolfman
   CLI.define_command do
     name "jobs"
     summary "manage rundeck jobs"
-    usage "jobs -s SERVICE -e ENV"
+    usage "jobs -a APP -e ENV"
     description <<-DESCRIPTION
 Examples:
 
-    $ #{Paint["wolfman jobs -s my-service -e staging", :magenta]}
-    # lists recent job executions for my-service staging
+    $ #{Paint["wolfman jobs -a myapp -e staging", :magenta]}
+    # lists recent job executions for myapp staging
 DESCRIPTION
 
-    option :s, :service, "service name (my-service)", argument: :required
+    option :a, :app, "app name (myapp)", argument: :required
     option :e, :env, "environment (production, staging, ...)", argument: :required
 
     run do |opts, args, cmd|
-      if !opts[:env].present? || !opts[:service].present?
+      if !opts[:env].present? || !opts[:app].present?
         puts cmd.help
         exit 1
       end
@@ -26,7 +26,7 @@ DESCRIPTION
 
       begin
         project = Rundeck.find_project!(opts[:env])
-        executions = Rundeck.find_executions!(project, opts[:service])
+        executions = Rundeck.find_executions!(project, opts[:app])
       rescue Rundeck::RundeckError => e
         puts e.message
         exit 1

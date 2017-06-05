@@ -2,13 +2,13 @@ module Wolfman
   CLI.define_command do
     name "config"
     summary "configure connection settings for AWS, Rundeck, and more"
-    usage "config SERVICE"
+    usage "config SETTING"
     description <<-DESCRIPTION
 Configures your AWS and Rundeck login credentials, and the endpoints used for accessing these services.
 
 Running this command will create or update your #{Paint["~/.wolfmanrc", :blue]} to store these credentials for future use. When storing this file on disk, it's permissions are set to #{Paint["0600", :blue]} so that only your user has read/write access.
 
-Examples:
+Options:
 
     $ #{Paint["wolfman config aws", :magenta]}
     # Configure AWS connection settings
@@ -21,16 +21,16 @@ Examples:
     DESCRIPTION
 
     run do |_opts, args, cmd|
-      service = args[0]
-      if !service.present? || !%w[aws open rundeck].include?(service)
+      setting = args[0]
+      if !setting.present? || !%w[aws open rundeck].include?(setting)
         puts cmd.help
         exit 0
       end
 
-      puts "Starting #{service} configuration...\n\n"
+      puts "Starting #{setting} configuration...\n\n"
       config = {}
 
-      if service == "aws"
+      if setting == "aws"
         puts "Find your AWS account ID from the console URL:"
         puts "https://#{Paint["My_AWS_Account_ID", :red]}.signin.aws.amazon.com/console\n\n"
 
@@ -44,12 +44,12 @@ Examples:
         # TODO: verify AWS connection
       end
 
-      if service == "open"
+      if setting == "open"
         config[:domain] = ask("Domain (ex: #{Paint["service.com", :red]}): ")
         config[:protocol] = ask("#{Paint["http", :red]} or #{Paint["https", :red]}? ") { |q| q.validate = /\Ahttps?\z/ }
       end
 
-      if service == "rundeck"
+      if setting == "rundeck"
         config[:host] = ask("Rundeck host (ex: #{Paint["https://rundeck.example.com", :red]}): ") { |q| q.validate = /\Ahttps?/ }
         config[:username] = ask("Rundeck username: ")
         config[:password] = ask("Rundeck password: ") { |q| q.echo = "*" }
@@ -65,9 +65,9 @@ Examples:
         puts "Connected!"
       end
 
-      Config.save!(service, config)
+      Config.save!(setting, config)
 
-      puts "\nDone configuring #{service}!"
+      puts "\nDone configuring #{setting}!"
     end
   end
 end
