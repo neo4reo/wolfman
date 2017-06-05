@@ -2,6 +2,8 @@
 
 CLI for Rundeck and AWS VPC infrastructure.
 
+<img width="817" src="https://cloud.githubusercontent.com/assets/158675/26771562/1ef1d640-498d-11e7-8b3e-289df492672d.png">
+
 ## Installation
 
 Clone the git repository and install gems:
