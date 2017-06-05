@@ -14,10 +14,9 @@ cd wolfman
 bundle install
 ```
 
-Finally, add an alias so that you can easily execute it:
+Finally, add an alias in your `~/.bashrc` (or equivalent) so that you can easily execute it:
 
 ```
-# Insert into ~/.bashrc or equivalent
 alias wolfman="/path/to/wolfman-repo/bin/wolfman"
 ```
 
