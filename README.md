@@ -1,4 +1,4 @@
-# wolfman
+# wolfman [![CircleCI](https://circleci.com/gh/wealthsimple/wolfman.svg?style=svg)](https://circleci.com/gh/wealthsimple/wolfman)
 
 CLI for Rundeck and AWS VPC infrastructure.
 
