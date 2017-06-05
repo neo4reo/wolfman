@@ -8,7 +8,7 @@ Run a command:
 Get help for a specific command:
     #{Paint["wolfman help COMMAND", :magenta]}
     DESCRIPTION
-    summary "CLI for Rundeck and the AWS VPC infrastructure"
+    summary "CLI for Rundeck and AWS EC2"
 
     run do |opts, args, cmd|
       if !opts.present? && !args.present?
