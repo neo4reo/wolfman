@@ -23,7 +23,26 @@ alias wolfman="/path/to/wolfman-repo/bin/wolfman"
 
 ## Usage
 
-TODO: Write instructions here
+Run `wolfman` and it will give you an overview of possible commands:
+
+```
+NAME
+    wolfman - CLI for Rundeck and AWS EC2
+
+DESCRIPTION
+    Run a command: wolfman COMMAND [command-specific-options]
+
+    Get help for a specific command: wolfman help COMMAND
+
+COMMANDS
+    config      configure connection settings for AWS, Rundeck, and more
+    console     open a console on an EC2 machine
+    help        show help
+    jobs        manage rundeck jobs
+    open        open an app/service in your web browser
+```
+
+On first use, you'll have to run `wolfman config` to configure your AWS and Rundeck connection settings.
 
 ## Development
 
