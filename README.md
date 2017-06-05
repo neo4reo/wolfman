@@ -35,6 +35,7 @@ DESCRIPTION
     Get help for a specific command: wolfman help COMMAND
 
 COMMANDS
+    builds      manage circleci builds
     config      configure connection settings for AWS, Rundeck, and more
     console     open a console on an EC2 machine
     help        show help
