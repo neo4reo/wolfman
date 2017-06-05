@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Marco Costa", "Peter Graham"]
   spec.email         = ["marco@wealthsimple.com", "peter@wealthsimple.com"]
 
-  spec.summary       = %q{CLI tool for Rundeck and AWS EC2}
-  spec.description   = %q{Command line interface for Rundeck and AWS EC2.}
+  spec.summary       = %q{CLI tool for Rundeck, CircleCI, and AWS EC2}
+  spec.description   = %q{Command line interface for Rundeck, CircleCI, and AWS EC2.}
   spec.homepage      = "https://github.com/wealthsimple/wolfman"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
