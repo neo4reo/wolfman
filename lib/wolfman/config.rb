@@ -1,33 +1,47 @@
 module Wolfman
   class Config
-    PATH = "#{Dir.home}/.wolfmanrc"
+    extend SingleForwardable
+
+    DEFAULT_PATH = "#{Dir.home}/.wolfmanrc"
     # Prevent other users from reading/writing to this file.
     PERMISSIONS = 0600
 
-    def self.config!
-      if !File.file?(PATH)
-        File.open(PATH, "w") { |f| f.write({}.to_yaml) }
-        File.chmod(PERMISSIONS, PATH)
+    attr_accessor :path, :attributes
+    def_delegators :config, :attributes, :get, :get!, :save!, :exists?
+
+    def initialize(path)
+      @path = path
+      if !File.file?(path)
+        File.open(path, "w") { |f| f.write({}.to_yaml) }
+        File.chmod(PERMISSIONS, path)
       end
-      YAML.load_file(PATH)
+      @attributes = YAML.load_file(path)
     end
 
-    def self.get(*keys)
-      config!.dig(*keys.map(&:to_s))
+    def get(*keys)
+      attributes.dig(*keys.map(&:to_s))
     end
 
-    def self.get!(*keys)
+    def get!(*keys)
       get(*keys) or raise KeyError.new("Config not found: #{keys.join(' => ')}")
     end
 
-    def self.exists?(*keys)
+    def exists?(*keys)
       get(*keys).present?
     end
 
-    def self.save!(key, value)
-      new_config = config!
-      new_config[key] = value
-      File.write(PATH, new_config.deep_stringify_keys.to_yaml)
+    def save!(key, value)
+      attributes[key] = value
+      attributes.deep_stringify_keys!
+      File.write(path, attributes.to_yaml)
+    end
+
+    def self.config(path = DEFAULT_PATH, reset: false)
+      if reset
+        @config = nil
+        File.delete(path) if File.file?(path)
+      end
+      @config ||= new(path)
     end
   end
 end

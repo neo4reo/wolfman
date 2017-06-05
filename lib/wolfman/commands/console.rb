@@ -51,8 +51,19 @@ Examples:
 
       puts "Establishing SSH connection to #{Paint[instance_name, :blue, :bold]} at #{Paint[instance.private_ip_address, :green]}..."
 
-      # TODO: make this more generic.
-      exec(%{ssh -t #{instance.private_ip_address}.ws 'sudo su'})
+      ssh_options = {
+        "UseKeychain" => "yes",
+        "AddKeysToAgent" => "yes",
+        "ForwardAgent" => "yes",
+        "TCPKeepAlive" => "yes",
+        "ServerAliveInterval" => "30",
+      }
+      if Config.exists?(:aws, :jumpbox_host)
+        ssh_options["ProxyCommand"] = %{'ssh -q #{Config.get!(:aws, :jumpbox_host)} -W "%h:%p"'}
+      end
+      ssh_options = ssh_options.map { |key, value| "-o #{key}=#{value}" }.join(" ")
+
+      exec(%{ssh #{ssh_options} -t #{instance.private_ip_address} 'sudo su'})
     end
   end
 end

@@ -43,6 +43,7 @@ Options:
         config[:access_key_id] = ask("AWS access key ID (ex: #{Paint["AKIA...", :red]}): ")
         config[:secret_access_key] = ask("AWS secret access key: ")
         config[:region] = ask("AWS region (ex: #{Paint["us-east-1", :red]}): ")
+        config[:jumpbox_host] = ask("Jumpbox host (optional): ")
 
         # TODO: verify AWS connection
       end
