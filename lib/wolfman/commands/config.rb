@@ -70,6 +70,7 @@ Options:
       if setting == "jumpbox"
         config[:host] = ask("Jumpbox host: ")
         config[:port] = ask("Jumpbox port (defaults to 22): ").presence
+        config[:username] = ask("Jumpbox username: ")
 
         puts "\nVerifying connection settings..."
         if !Jumpbox.connected?(config)

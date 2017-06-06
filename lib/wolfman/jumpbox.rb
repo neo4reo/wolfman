@@ -3,11 +3,15 @@ module Wolfman
     class JumpboxError < StandardError
     end
 
+    REQUIRED_CONFIG = %w[host username]
+
     def self.configured?
-      Config.exists?(:jumpbox, :host)
+      REQUIRED_CONFIG.all? do |key|
+        Config.exists?(:jumpbox, key)
+      end
     end
 
-    def self.connected?(host: nil, port: nil)
+    def self.connected?(host: nil, port: nil, username: nil)
       check_connection!(host: host, port: port)
       true
     rescue JumpboxError
