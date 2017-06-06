@@ -11,7 +11,7 @@ module Wolfman
       end
     end
 
-    def self.connected?(host: nil, port: nil, username: nil)
+    def self.connected?(host: nil, port: nil)
       check_connection!(host: host, port: port)
       true
     rescue JumpboxError

@@ -73,7 +73,7 @@ Options:
         config[:username] = ask("Jumpbox username: ")
 
         puts "\nVerifying connection settings..."
-        if !Jumpbox.connected?(config)
+        if !Jumpbox.connected?(host: config[:host], port: config[:port])
           puts "Unable to open a TCP socket. Exiting without saving configuration."
           exit 1
         end
