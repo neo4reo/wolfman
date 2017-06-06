@@ -52,6 +52,7 @@ Examples:
       puts "Establishing SSH connection to #{Paint[instance_name, :blue, :bold]} at #{Paint[instance.private_ip_address, :green]}..."
 
       ssh_options = {
+        "User" => Config.get!(:jumpbox, :username),
         "UseKeychain" => "yes",
         "AddKeysToAgent" => "yes",
         "ForwardAgent" => "yes",
@@ -65,7 +66,7 @@ Examples:
           puts e.message
           exit 1
         end
-        ssh_options["ProxyCommand"] = %{'ssh -q #{Jumpbox.config_host} -p #{Jumpbox.config_port} -W "%h:%p"'}
+        ssh_options["ProxyCommand"] = %{'ssh -q #{Config.get!(:jumpbox, :username)}@#{Jumpbox.config_host} -p #{Jumpbox.config_port} -W "%h:%p"'}
       end
       ssh_options = ssh_options.map { |key, value| "-o #{key}=#{value}" }.join(" ")
 
